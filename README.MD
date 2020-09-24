@@ -8,7 +8,7 @@
 
 克隆或复制 [jenkins](https://links.jianshu.com/go?to=https%3A%2F%2Fgithub.com%2Fcookcodeblog%2Fdocker-compose-examples%2Ftree%2Fmaster%2Fjenkins) 目录到机器上。
 
-或者创建jenkins文件夹，文件夹下存放一下三个文件：
+或者创建jenkins文件夹，文件夹下存放以下三个文件：
  **docker-compose.yml：**
 
 ```bash
