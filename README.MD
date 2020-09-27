@@ -92,3 +92,18 @@ This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
 - 点击底部**Save按钮保存配置**
 - 完成环境变量配置
 
+### Maven环境变量
+
+>根据上述环境变量设置步骤到达Environment variables后，设置如下所示的Name和Value，其中**环境变量地址按实际情况变更**
+
+Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段值，具体如下所示：
+
+- JDK环境变量
+  - Name：JAVA_HOME
+  - Value：/usr/local/openjdk-8
+
+- Maven环境变量
+  - Name：M2_HOME
+  - Value：/jenkins_home/maven3
+  - Name：PATH+EXTRA
+  - $M2_HOME/bin
