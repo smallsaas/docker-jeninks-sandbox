@@ -12,7 +12,7 @@
  **docker-compose.yml：**
 
 ```bash
-version: '3'
+version: '2'
 services:
   jenkins:
     image: 'jenkins/jenkins:lts'
@@ -21,8 +21,8 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - './jenkins:/jenkins'
-      - './settings.xml/settings.xml:/jenkins/maven3/conf/settings.xml'
+      - './jenkins_home:/jenkins_home'
+      - './settings.xml/settings.xml:/jenkins_home/maven3/conf/settings.xml'
 ```
 
 在Jenkins目录运行以下命令：
