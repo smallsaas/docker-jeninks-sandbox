@@ -1,12 +1,10 @@
-## 前置条件
-
-假设机器上已经安装了Docker和Docker-Compose。
-
-如果还未安装，请参考Docker官方文档进行安装。
-
 ## 安装步骤
 
-可根据[Jenkins官方文档](https://www.jenkins.io/doc/book/installing/)下载部署至服务器上
+>假设机器上已经安装了Docker和Docker-Compose
+>
+>如果还未安装，请参考Docker官方文档进行安装
+
+>可根据[Jenkins官方文档](https://www.jenkins.io/doc/book/installing/)下载部署至服务器上
 
 >**本文档按照docker-compose方式进行Jenkins的部署**
 
@@ -21,43 +19,16 @@ services:
     container_name: jenkins
     restart: always
     ports:
-      - '8080:8080'
-      - '50000:50000'
+      - '8000:8000'
     volumes:
-      - './jenkins_home:/jenkins_home'
+      - './jenkins:/jenkins'
+      - './settings.xml/settings.xml:/jenkins/maven3/conf/settings.xml'
 ```
 
-**docker_run_install_jenkins.sh：**
+在Jenkins目录运行以下命令：
 
 ```bash
-#!/bin/bash
-
-docker run --name jenkins \
-       -d \
-       -p 8080:8080 \
-       -p 50000:50000 \
-       -v /var/jenkins_home:/var/jenkins_home \
-       --restart always \
-       jenkins/jenkins:lts
-```
-
-**pre_install_jenkins.sh：**
-
-```bash
-#!/bin/bash
-
-mkdir -p /var/jenkins_home
-chown -R 1000:1000 /var/jenkins_home
-```
-
-在jenkins目录运行以下命令：
-
-```bash
-# 给脚本授权
-chmod u+x *.sh
-# 创建Jenkins数据目录（用作持久卷）
-./pre_install_jenkins.sh
-# 启动Jenkins容器
+# 启动Jenkins
 docker-compose up -d
 ```
 
@@ -107,3 +78,17 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
   - Value：/jenkins_home/maven3
   - Name：PATH+EXTRA
   - $M2_HOME/bin
+
+## 安装JDK11
+
+- 登录Jenkins
+- 点击面板左侧 -> Manage Jenkins -> Global Tool Configuration -> Add JDK (near JDK installations)
+- 输入**Name：JAVA11**
+- 删除 the java.sun.com installer
+- 点击底部 "**Add Installer**" 按钮并选择 "**Extract *.zip/*.tar.gz**"
+- 输入以下配置信息
+  - **Label**: master
+  - **Download URL**: https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz
+  - **Subdirectory of extracted archive**: jdk-11.0.1
+- 后续构建项目时，可在 Project -> Configure ->  General -> JDK -> 选择 "JAVA11" 并**勾选Execute concurrent builds if necessary** 即可使用JDK11
+

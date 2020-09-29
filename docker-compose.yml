@@ -7,4 +7,5 @@ services:
     ports:
       - '8000:8000'
     volumes:
-      - './jenkins_home:/jenkins_home'
+      - './jenkins:/jenkins'
+      - './settings.xml/settings.xml:/jenkins/maven3/conf/settings.xml'
