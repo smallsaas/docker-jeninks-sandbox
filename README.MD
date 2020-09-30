@@ -119,6 +119,10 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
   - 在**凭据**中选择上述添加的新凭证
   - **勾选管理Hook**
 - 点击连接测试按钮确保联通
+- 点击下方**Advanced按钮**设置
+  - 勾选**覆盖Hook URL中的为 Github 指定另外一个 Hook URL**
+  - 在下方地址栏填入Hook URL：http://domain:port/github-webhook/
+  - 点击上方给所有任务重新注册hook
 - 点击页面下方Save / Apply按钮保存
 
 ### 配置Project
