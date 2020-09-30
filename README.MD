@@ -1,3 +1,5 @@
+# Jenkins使用说明
+
 ## 安装步骤
 
 >假设机器上已经安装了Docker和Docker-Compose
@@ -8,7 +10,7 @@
 
 >**本文档按照docker-compose方式进行Jenkins的部署**
 
-创建Jenkins文件夹，文件夹下存放以下三个文件：
+创建Jenkins文件夹，文件夹下存放以下文件：
  **docker-compose.yml：**
 
 ```bash
@@ -79,7 +81,7 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
   - Name：PATH+EXTRA
   - $M2_HOME/bin
 
-## 安装JDK11
+## 配置JDK11
 
 - 登录Jenkins
 - 点击面板左侧 -> Manage Jenkins -> Global Tool Configuration -> Add JDK (near JDK installations)
@@ -91,4 +93,44 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
   - **Download URL**: https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz
   - **Subdirectory of extracted archive**: jdk-11.0.1
 - 后续构建项目时，可在 Project -> Configure ->  General -> JDK -> 选择 "JAVA11" 并**勾选Execute concurrent builds if necessary** 即可使用JDK11
+
+## 自动构建（Git Push触发方式）
+
+### 获取Persional Access Token
+
+- 进入项目所在的GitHub个人主页
+- 点击进入右上方GitHub头像中的Settings -> Developer Settings -> Persional access token
+- 点击右上方Generate new Token
+- 勾选**repo与admin:repo_hook**选项
+- 点击Generate token，复制该Token
+
+### 配置Jenkins
+
+- 登录Jenkins
+- 点击面板左侧 -> Manage Jenkins -> Configure System -> Github面板
+- 点击添加Github服务器 -> GitHub Server
+  - **名称**按实际情况填写
+  - **API URL** 填写为https://api.github.com
+  - **凭据**点击Add -> Jenkins（在弹出面板中做如下配置）
+    - **Kind**选择**Secret  text**
+    - **Secret**中粘贴上述生成的Token
+    - **Description**中按实际情况填写
+    - 点击Add按钮完成添加
+  - 在**凭据**中选择上述添加的新凭证
+  - **勾选管理Hook**
+- 点击连接测试按钮确保联通
+- 点击页面下方Save / Apply按钮保存
+
+### 配置Project
+
+- 选择所需配置的Project
+- 点击面板左侧 -> Configure -> Build Triggers面板
+- **勾选GitHub hook trigger for GITScm polling**
+- 进入GitHub网站对应项目位置 -> Settings -> Webhooks -> 左上角Add Webhook
+- 在**Payload URL**处填写 http://server_ip:port/github-webhook
+- 完成后点击Add webhook
+
+---
+
+至此，完成Git Push触发Jenkins自动构建，在此后Project有代码提交至GitHub时，GitHub将会向该WebHook URL发送POST请求通知Jenkins进行构建。
 
