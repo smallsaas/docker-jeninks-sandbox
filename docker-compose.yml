@@ -5,7 +5,7 @@ services:
     container_name: jenkins
     restart: always
     ports:
-      - '8000:8000'
+      - '8000:8080'
     volumes:
       - './jenkins_home:/jenkins_home'
-      - './settings.xml/settings.xml:/jenkins_home/maven3/conf/settings.xml'
+      - './maven3:/opt/maven3'
