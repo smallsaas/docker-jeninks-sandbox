@@ -138,3 +138,12 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
 
 至此，完成Git Push触发Jenkins自动构建，在此后Project有代码提交至GitHub时，GitHub将会向该WebHook URL发送POST请求通知Jenkins进行构建。
 
+## 构建触发链接
+
+- 选择所需配置的Project
+- 点击面板左侧 -> Configure -> Build Triggers面板
+- 勾选**Trigger builds remotely (e.g., from scripts）**
+- 填写Authentication Token用于安全验证
+- 点击**Manage Jenkins -> Manage Users ->  Select User ->  Setting -> API Token -> Add new Token -> Copy**
+- 根据上述信息，构建触发链接，按照如下格式
+  - http://userid:apitoken@your-jenkins.com/job/JobName/build?token=OBhNhax
