@@ -140,6 +140,8 @@ Maven环境变量配置必须设置JAVA_HOME、M2_HOME和PATH+EXTRA三个字段�
 
 ## 构建触发链接
 
+>**触发脚本可参考本目录下`post-commit.sh`文件**
+
 - 选择所需配置的Project
 - 点击面板左侧 -> Configure -> Build Triggers面板
 - 勾选**Trigger builds remotely (e.g., from scripts）**
